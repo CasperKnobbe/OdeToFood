@@ -34,12 +34,12 @@ namespace OdeToFood.Controllers
 
         // POST: Reviews/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Models.RestaurantReview collection)
         {
             try
             {
-                // TODO: Add insert logic here
-
+                _reviews.Add(collection);
+                UpdateModel(_reviews);
                 return RedirectToAction("Index");
             }
             catch
@@ -96,25 +96,23 @@ namespace OdeToFood.Controllers
             }
         }
 
-        static List<RestaurantReview> _reviews = new List<RestaurantReview>
-        {
-            new RestaurantReview
-            {
-                Id = 1,
-                Name = "Burger Jimmy",
-                City = "Utrecht",
-                Country = "NL",
-                Rating = 8,
-            },
+        static List<Models.RestaurantReview> _reviews = new List<Models.RestaurantReview>
+        { };
+        //    new RestaurantReview
+        //    {
+        //        Id = 1,
+        //        Body = "Nice burgers, excellent service!",
+        //        RestaurantId = 1,
+        //        Rating = 8,
+        //    },
 
-            new RestaurantReview
-            {
-                Id = 2,
-                Name = "Fred's Friet en Frituur",
-                City = "Amsterdam",
-                Country = "NL",
-                Rating = 7,
-            }
-        };
+        //    new RestaurantReview
+        //    {
+        //        Id = 2,
+        //        Body = "A long wait, but the food was worth it! Service was so, so.",
+        //        RestaurantId = 2,
+        //        Rating = 7,
+        //    }
+        //};
     }
 }
