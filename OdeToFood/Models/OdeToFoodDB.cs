@@ -30,16 +30,17 @@ namespace OdeToFood.Models
         }
         public void SetRestaurants(RestaurantReview restaurantReview)
         {
-            using (LINQ_to_SQL_CaspersDatabaseDataContext ctx = new LINQ_to_SQL_CaspersDatabaseDataContext()
+            using (LINQ_to_SQL_CaspersDatabaseDataContext ctx = new LINQ_to_SQL_CaspersDatabaseDataContext())
             {
-              ctx.RestaurantReviews.InsertOnSubmit(new OdeToFood.RestaurantReview
-              {
-                  Body = restaurantReview.Body,
-                  Id = restaurantReview.Id,
-                  Rating = restaurantReview.Rating,
-                  RestaurantId = restaurantReview.RestaurantId,
-              })
-            }) ;
+                ctx.RestaurantReviews.InsertOnSubmit(new OdeToFood.RestaurantReview
+                {
+                    Body = restaurantReview.Body,
+                    Id = restaurantReview.Id,
+                    Rating = restaurantReview.Rating,
+                    RestaurantId = restaurantReview.RestaurantId,
+                });
+                ctx.SubmitChanges();
+            };
         }        
     }
 }

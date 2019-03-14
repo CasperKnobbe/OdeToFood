@@ -38,6 +38,7 @@ namespace OdeToFood.Controllers
         {
             try
             {
+                dB.SetRestaurants(collection);
                 _reviews.Add(collection);
                 UpdateModel(_reviews);
                 return RedirectToAction("Index");
@@ -97,7 +98,7 @@ namespace OdeToFood.Controllers
         }
 
         static OdeToFoodDB dB = new OdeToFoodDB();
-        static List<Models.RestaurantReview> _reviews = dB.Restaurants;
+        static List<Models.RestaurantReview> _reviews = dB.GetRestaurants();
        
         //    new RestaurantReview
         //    {
