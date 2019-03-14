@@ -96,8 +96,9 @@ namespace OdeToFood.Controllers
             }
         }
 
-        static List<Models.RestaurantReview> _reviews = new List<Models.RestaurantReview>
-        { };
+        static OdeToFoodDB dB = new OdeToFoodDB();
+        static List<Models.RestaurantReview> _reviews = dB.Restaurants;
+       
         //    new RestaurantReview
         //    {
         //        Id = 1,
