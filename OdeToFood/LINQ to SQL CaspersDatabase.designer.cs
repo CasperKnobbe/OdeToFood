@@ -33,12 +33,12 @@ namespace OdeToFood
     partial void InsertSomePeople(SomePeople instance);
     partial void UpdateSomePeople(SomePeople instance);
     partial void DeleteSomePeople(SomePeople instance);
-    partial void InsertRestaurant(Restaurant instance);
-    partial void UpdateRestaurant(Restaurant instance);
-    partial void DeleteRestaurant(Restaurant instance);
     partial void InsertRestaurantReview(RestaurantReview instance);
     partial void UpdateRestaurantReview(RestaurantReview instance);
     partial void DeleteRestaurantReview(RestaurantReview instance);
+    partial void InsertRestaurant(Restaurant instance);
+    partial void UpdateRestaurant(Restaurant instance);
+    partial void DeleteRestaurant(Restaurant instance);
     #endregion
 		
 		public LINQ_to_SQL_CaspersDatabaseDataContext() : 
@@ -79,19 +79,19 @@ namespace OdeToFood
 			}
 		}
 		
-		public System.Data.Linq.Table<Restaurant> Restaurants
-		{
-			get
-			{
-				return this.GetTable<Restaurant>();
-			}
-		}
-		
 		public System.Data.Linq.Table<RestaurantReview> RestaurantReviews
 		{
 			get
 			{
 				return this.GetTable<RestaurantReview>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Restaurant> Restaurants
+		{
+			get
+			{
+				return this.GetTable<Restaurant>();
 			}
 		}
 	}
@@ -278,6 +278,181 @@ namespace OdeToFood
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RestaurantReviews")]
+	public partial class RestaurantReview : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _Rating;
+		
+		private string _Body;
+		
+		private int _RestaurantId;
+		
+		private EntityRef<Restaurant> _Restaurant;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnRatingChanging(int value);
+    partial void OnRatingChanged();
+    partial void OnBodyChanging(string value);
+    partial void OnBodyChanged();
+    partial void OnRestaurantIdChanging(int value);
+    partial void OnRestaurantIdChanged();
+    #endregion
+		
+		public RestaurantReview()
+		{
+			this._Restaurant = default(EntityRef<Restaurant>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rating", DbType="Int NOT NULL")]
+		public int Rating
+		{
+			get
+			{
+				return this._Rating;
+			}
+			set
+			{
+				if ((this._Rating != value))
+				{
+					this.OnRatingChanging(value);
+					this.SendPropertyChanging();
+					this._Rating = value;
+					this.SendPropertyChanged("Rating");
+					this.OnRatingChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Body", DbType="NVarChar(MAX)")]
+		public string Body
+		{
+			get
+			{
+				return this._Body;
+			}
+			set
+			{
+				if ((this._Body != value))
+				{
+					this.OnBodyChanging(value);
+					this.SendPropertyChanging();
+					this._Body = value;
+					this.SendPropertyChanged("Body");
+					this.OnBodyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RestaurantId", DbType="Int NOT NULL")]
+		public int RestaurantId
+		{
+			get
+			{
+				return this._RestaurantId;
+			}
+			set
+			{
+				if ((this._RestaurantId != value))
+				{
+					if (this._Restaurant.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRestaurantIdChanging(value);
+					this.SendPropertyChanging();
+					this._RestaurantId = value;
+					this.SendPropertyChanged("RestaurantId");
+					this.OnRestaurantIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Restaurant1_RestaurantReview1", Storage="_Restaurant", ThisKey="RestaurantId", OtherKey="Id", IsForeignKey=true)]
+		public Restaurant Restaurant
+		{
+			get
+			{
+				return this._Restaurant.Entity;
+			}
+			set
+			{
+				Restaurant previousValue = this._Restaurant.Entity;
+				if (((previousValue != value) 
+							|| (this._Restaurant.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Restaurant.Entity = null;
+						previousValue.RestaurantReviews.Remove(this);
+					}
+					this._Restaurant.Entity = value;
+					if ((value != null))
+					{
+						value.RestaurantReviews.Add(this);
+						this._RestaurantId = value.Id;
+					}
+					else
+					{
+						this._RestaurantId = default(int);
+					}
+					this.SendPropertyChanged("Restaurant");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Restaurants")]
 	public partial class Restaurant : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -291,6 +466,8 @@ namespace OdeToFood
 		private string _City;
 		
 		private string _Country;
+		
+		private EntitySet<RestaurantReview> _RestaurantReviews;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -308,6 +485,7 @@ namespace OdeToFood
 		
 		public Restaurant()
 		{
+			this._RestaurantReviews = new EntitySet<RestaurantReview>(new Action<RestaurantReview>(this.attach_RestaurantReviews), new Action<RestaurantReview>(this.detach_RestaurantReviews));
 			OnCreated();
 		}
 		
@@ -391,137 +569,16 @@ namespace OdeToFood
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RestaurantReviews")]
-	public partial class RestaurantReview : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private int _Rating;
-		
-		private string _Body;
-		
-		private int _RestaurantId;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnRatingChanging(int value);
-    partial void OnRatingChanged();
-    partial void OnBodyChanging(string value);
-    partial void OnBodyChanged();
-    partial void OnRestaurantIdChanging(int value);
-    partial void OnRestaurantIdChanged();
-    #endregion
-		
-		public RestaurantReview()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int Id
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Restaurant1_RestaurantReview1", Storage="_RestaurantReviews", ThisKey="Id", OtherKey="RestaurantId")]
+		public EntitySet<RestaurantReview> RestaurantReviews
 		{
 			get
 			{
-				return this._Id;
+				return this._RestaurantReviews;
 			}
 			set
 			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rating", DbType="Int NOT NULL")]
-		public int Rating
-		{
-			get
-			{
-				return this._Rating;
-			}
-			set
-			{
-				if ((this._Rating != value))
-				{
-					this.OnRatingChanging(value);
-					this.SendPropertyChanging();
-					this._Rating = value;
-					this.SendPropertyChanged("Rating");
-					this.OnRatingChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Body", DbType="NVarChar(MAX)")]
-		public string Body
-		{
-			get
-			{
-				return this._Body;
-			}
-			set
-			{
-				if ((this._Body != value))
-				{
-					this.OnBodyChanging(value);
-					this.SendPropertyChanging();
-					this._Body = value;
-					this.SendPropertyChanged("Body");
-					this.OnBodyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RestaurantId", DbType="Int NOT NULL")]
-		public int RestaurantId
-		{
-			get
-			{
-				return this._RestaurantId;
-			}
-			set
-			{
-				if ((this._RestaurantId != value))
-				{
-					this.OnRestaurantIdChanging(value);
-					this.SendPropertyChanging();
-					this._RestaurantId = value;
-					this.SendPropertyChanged("RestaurantId");
-					this.OnRestaurantIdChanged();
-				}
+				this._RestaurantReviews.Assign(value);
 			}
 		}
 		
@@ -543,6 +600,18 @@ namespace OdeToFood
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_RestaurantReviews(RestaurantReview entity)
+		{
+			this.SendPropertyChanging();
+			entity.Restaurant = this;
+		}
+		
+		private void detach_RestaurantReviews(RestaurantReview entity)
+		{
+			this.SendPropertyChanging();
+			entity.Restaurant = null;
 		}
 	}
 }

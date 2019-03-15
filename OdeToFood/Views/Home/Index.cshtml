@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<OdeToFood.Models.Restaurant>
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -6,9 +8,29 @@
     <h1>Restaurant reviews</h1>
     <p class="lead">Going to a new restaurant doesn't have to be a gamble. </p> 
     <p class="lead">Always make sure to check out the latest review here, at restaurant reviews.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
 </div>
 
+<div>
+    <h2>Our best restaurants:</h2>
+</div>
+<div>
+    @foreach (var restaurant in Model)
+    {
+        <table class = table>
+            <tr><h3><b>
+                @Html.DisplayFor(ModelItem => restaurant.Name)
+            </b></h3></tr>
+            <tr>
+                @Html.DisplayFor(ModelItem => restaurant.City)
+            </tr>
+            <tr>
+                @Html.DisplayFor(ModelItem => restaurant.Country)
+            </tr>
+            @Html.ActionLink("Reviews!", "RestaurantReviews", "Reviews", new { id=restaurant.Id}, null)
+
+        </table>
+    }
+</div>
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
@@ -29,4 +51,7 @@
         <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
+</div>
+<div>
+
 </div>

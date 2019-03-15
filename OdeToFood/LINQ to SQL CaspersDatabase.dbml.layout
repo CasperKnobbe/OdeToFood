@@ -8,17 +8,24 @@
         <elementListCompartment Id="42b95a3e-e1c3-4bba-9e6e-f59e9187077f" absoluteBounds="10.39, 2.085, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="c7ec2a02-049c-4f1b-95fa-6d21df63940a" absoluteBounds="4.875, 1.75, 2, 1.5785953776041666">
-      <DataClassMoniker Name="/LINQ_to_SQL_CaspersDatabaseDataContext/Restaurant" />
-      <nestedChildShapes>
-        <elementListCompartment Id="09da7517-2047-4417-93dd-f8df0ef866bb" absoluteBounds="4.89, 2.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="9d2dd990-9cf2-429e-a3d9-bb2bfc66a8ab" absoluteBounds="4.875, 4.375, 2, 1.5785953776041666">
+    <classShape Id="2db7c251-0c12-4ad7-b5e5-dca90a139a88" absoluteBounds="1.625, 1.625, 2, 1.5785953776041666">
       <DataClassMoniker Name="/LINQ_to_SQL_CaspersDatabaseDataContext/RestaurantReview" />
       <nestedChildShapes>
-        <elementListCompartment Id="0c59f025-d357-444f-aa44-36e97e90c6ac" absoluteBounds="4.89, 4.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="ded75f90-ec9b-4d14-9046-035485bdcabd" absoluteBounds="1.6400000000000001, 2.085, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="a636201f-49c0-4061-936b-d7eabd687c6a" absoluteBounds="1.5, 4.25, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/LINQ_to_SQL_CaspersDatabaseDataContext/Restaurant" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1af34670-c1c9-4cc9-92b3-7f6895a1f781" absoluteBounds="1.5150000000000001, 4.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.5625 : 4.25); (2.5625 : 3.20359537760417)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/LINQ_to_SQL_CaspersDatabaseDataContext/Restaurant/Restaurant1_RestaurantReview1" />
+      <nodes>
+        <classShapeMoniker Id="a636201f-49c0-4061-936b-d7eabd687c6a" />
+        <classShapeMoniker Id="2db7c251-0c12-4ad7-b5e5-dca90a139a88" />
+      </nodes>
+    </associationConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>
