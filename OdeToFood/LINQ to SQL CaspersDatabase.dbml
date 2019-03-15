@@ -10,20 +10,22 @@
       <Column Name="Salary" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Restaurants" Member="Restaurants">
-    <Type Name="Restaurant">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="City" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Country" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.RestaurantReviews" Member="RestaurantReviews">
     <Type Name="RestaurantReview">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Rating" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Body" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="RestaurantId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Restaurant1_RestaurantReview1" Member="Restaurant" ThisKey="RestaurantId" OtherKey="Id" Type="Restaurant" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Restaurants" Member="Restaurants">
+    <Type Name="Restaurant">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="City" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Country" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Restaurant1_RestaurantReview1" Member="RestaurantReviews" ThisKey="Id" OtherKey="RestaurantId" Type="RestaurantReview" />
     </Type>
   </Table>
 </Database>

@@ -9,6 +9,18 @@ namespace OdeToFood.Controllers
 {
     public class ReviewsController : Controller
     {
+        // POST: SpecificReviews
+        public ActionResult RestaurantReviews(int id)
+        {
+            var model =
+                from r in _reviews
+                where r.RestaurantId == id
+                orderby r.Rating
+                select r;
+
+            return View(model);
+        }
+
         // GET: Reviews
         public ActionResult Index()
         {
@@ -38,7 +50,7 @@ namespace OdeToFood.Controllers
         {
             try
             {
-                dB.SetRestaurants(collection);
+                dB.SetRestaurantReview(collection);
                 _reviews.Add(collection);
                 UpdateModel(_reviews);
                 return RedirectToAction("Index");
@@ -98,23 +110,6 @@ namespace OdeToFood.Controllers
         }
 
         static OdeToFoodDB dB = new OdeToFoodDB();
-        static List<Models.RestaurantReview> _reviews = dB.GetRestaurants();
-       
-        //    new RestaurantReview
-        //    {
-        //        Id = 1,
-        //        Body = "Nice burgers, excellent service!",
-        //        RestaurantId = 1,
-        //        Rating = 8,
-        //    },
-
-        //    new RestaurantReview
-        //    {
-        //        Id = 2,
-        //        Body = "A long wait, but the food was worth it! Service was so, so.",
-        //        RestaurantId = 2,
-        //        Rating = 7,
-        //    }
-        //};
+        static List<Models.RestaurantReview> _reviews = dB.GetRestaurantReviews();
     }
 }

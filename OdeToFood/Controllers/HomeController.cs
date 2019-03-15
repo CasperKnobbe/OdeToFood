@@ -11,7 +11,9 @@ namespace OdeToFood.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+
+            var model = restaurants;
+            return View(model);
         }
 
         public ActionResult About()
@@ -31,5 +33,7 @@ namespace OdeToFood.Controllers
 
             return View();
         }
+        static OdeToFoodDB dB = new OdeToFoodDB();
+        static List<Models.Restaurant> restaurants = dB.GetRestaurants();
     }
 }

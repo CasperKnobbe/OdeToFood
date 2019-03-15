@@ -8,7 +8,7 @@ namespace OdeToFood.Models
 {
     public class OdeToFoodDB
     {
-        public List<RestaurantReview> GetRestaurants()
+        public List<RestaurantReview> GetRestaurantReviews()
         {
             using (LINQ_to_SQL_CaspersDatabaseDataContext ctx = new LINQ_to_SQL_CaspersDatabaseDataContext())
             {
@@ -23,12 +23,13 @@ namespace OdeToFood.Models
                         Body = restaurantReview.Body,
                         Rating = restaurantReview.Rating,
                         RestaurantId = restaurantReview.RestaurantId
-                        });
+                    });
                 }
                 return restaurantReviews;
             }
         }
-        public void SetRestaurants(RestaurantReview restaurantReview)
+
+        public void SetRestaurantReview(RestaurantReview restaurantReview)
         {
             using (LINQ_to_SQL_CaspersDatabaseDataContext ctx = new LINQ_to_SQL_CaspersDatabaseDataContext())
             {
@@ -41,6 +42,53 @@ namespace OdeToFood.Models
                 });
                 ctx.SubmitChanges();
             };
-        }        
+        }
+
+
+        public List<Restaurant> GetRestaurants()
+        {
+            using (LINQ_to_SQL_CaspersDatabaseDataContext ctx = new LINQ_to_SQL_CaspersDatabaseDataContext())
+            {
+                List<Restaurant> restaurants = new List<Restaurant>();
+                var restaurantInfo = ctx.Restaurants;
+                foreach (var restaurant in restaurantInfo)
+                {
+                    restaurants.Add(new Restaurant()
+                    {
+                        Id = restaurant.Id,
+                        Name = restaurant.Name,
+                        City = restaurant.City,
+                        Country = restaurant.Country,
+                        Reviews = new List<RestaurantReview>()
+                    });
+                    foreach (var review in restaurant.RestaurantReviews)
+                    {
+                        restaurants.Last().Reviews.Add(new RestaurantReview
+                        {
+                            Id = review.Id,
+                            Body = review.Body,
+                            Rating = review.Rating,
+                            RestaurantId = review.RestaurantId
+                        });                    
+                    }                    
+                }
+                return restaurants;
+            }
+        }
+
+        public void SetRestaurant(Restaurant restaurant)
+        {
+            using (LINQ_to_SQL_CaspersDatabaseDataContext ctx = new LINQ_to_SQL_CaspersDatabaseDataContext())
+            {
+                ctx.Restaurants.InsertOnSubmit(new OdeToFood.Restaurant
+                {
+                    Id = restaurant.Id,
+                    Name = restaurant.Name,
+                    City = restaurant.City,
+                    Country = restaurant.Country
+                });
+                ctx.SubmitChanges();
+            }
+        }
     }
 }
